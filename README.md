@@ -2,7 +2,12 @@
 Dynamic applicability domain (dAD) is a extension of conformal predictor framework for approximation of prediction regions with confidence guarantees for dyadic data.
 
 ## 1. Download datasets 
-Download dataset to the root of the repo from https://drive.google.com/drive/folders/1p-dWKNgbMWXv2WZ6bbdsRgYGOCNwGIFA?usp=sharing
+Download datasets to the root of the repo from https://drive.google.com/drive/folders/1p-dWKNgbMWXv2WZ6bbdsRgYGOCNwGIFA?usp=sharing
+Datasets include:
+- training set (SCKBA)
+- test sets (S1-S4)
+- compound similarity matrix (Tanimoto)
+- target similarity matrix (SW)
 
 To apply dAD method over small compound kinase inhibitor dataset (SCKBA) run:
 
