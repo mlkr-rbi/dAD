@@ -62,4 +62,4 @@ xg_reg_ERR.fit(X_train, y_train)
 
 
 # SAVE MODEL!
-pickle.dump(xg_reg_ERR, open('./output/xg_reg_ERR_baseline.pkl', 'wb'))
+pickle.dump(xg_reg_ERR, open('./output/xg_reg_ERR_base.pkl', 'wb'))
