@@ -11,14 +11,14 @@ random.seed(SEED)
 np.random.seed(SEED)
 
 # LOAD DATA
-train_00 = pd.read_csv('~/notebooks/PDB/DATA/CP_2022/data/train_00.csv')
+train_00 = pd.read_csv('./sckba/train_00.csv')
 
 # Subset data on proper traning and calibration set
-ssampl = train_00.sample(n=4000, random_state=SEED)
-sstrain = train_00.drop(ssampl.index)
+calib = train_00.sample(n=4000, random_state=SEED)
+train_00 = train_00.drop(calib.index)
 
 # XGBOOST
-X_train, y_train =  sstrain.iloc[:,3:], sstrain.iloc[:,2]
+X_train, y_train =  train_00.iloc[:,3:], train_00.iloc[:,2]
 
 # A) EDIT COLNAMES - TRAIN
 X_train.columns = X_train.columns.str.replace('[','')
@@ -33,8 +33,8 @@ model = xgb.XGBRegressor(colsample_bytree = 0.3, learning_rate = 0.1, max_depth 
 
 cv_preds = []
 for i in range(0,10):
-    cv_preds.append(cross_val_predict(model, np.asarray(X_train), np.asarray(y_train), cv=cvx, method='predict', n_jobs=40, verbose=1))
+    cv_preds.append(cross_val_predict(model, np.asarray(X_train), np.asarray(y_train), cv=cvx, method='predict', n_jobs=-1, verbose=1))
 
 # SAVE FILE
 cv_predictions = pd.DataFrame(cv_preds).T
-cv_predictions.to_csv('./scenarios/cv_predictions_BASELINE.csv')
+cv_predictions.to_csv('./output/cv_predictions_BASELINE.csv')
