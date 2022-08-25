@@ -11,7 +11,7 @@ nonconformist >= '2.1.0'
 ```
 
 ## 1. SCKBA
-dAD approach applied over SCKBA (small compound-kinase binding affinity dataset) datasest, and tested over four difficulty scenarios (S1-S4).
+dAD approach applied over small compound-kinase binding affinity dataset (SCKBA) datasest, and tested over four difficulty scenarios (S1-S4).
 
 ### 1.1. Download datasets 
 Download .zip file with datasets to the root of the repo from `https://drive.google.com/file/d/1ZTxLLd3-5WToYnIodjJic6aey2FxY7Ho/view?usp=sharing`
