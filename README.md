@@ -14,12 +14,13 @@ nonconformist >= '2.1.0'
 dAD approach applied over SCKBA (small compound-kinase binding affinity dataset) datasest, and tested over four difficulty scenarios (S1-S4).
 
 ### 1.1. Download datasets 
-Download .zip file with datasets to the root of the repo from `https://drive.google.com/file/d/1Tfj52iKn0Pkc_-BPf5Y2X0eNM_ATYOey/view?usp=sharing`
+Download .zip file with datasets to the root of the repo from `https://drive.google.com/file/d/1ZTxLLd3-5WToYnIodjJic6aey2FxY7Ho/view?usp=sharing`
 
-Or downolad directly from command line using gdown:
+Or download directly from command line using gdown:
 ```
 pip install gdown
-gdown 1Tfj52iKn0Pkc_-BPf5Y2X0eNM_ATYOey
+gdown 1ZTxLLd3-5WToYnIodjJic6aey2FxY7Ho
+unzip sckba.zip
 ```
 
 Datasets include:
