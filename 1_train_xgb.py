@@ -4,7 +4,7 @@ import pickle
 import pandas as pd
 
 # LOAD DATA
-train_00 = pd.read_csv('./scenarios/train_00.csv')
+train_00 = pd.read_csv('./sckba/train_00.csv')
 
 # XGBOOST
 X_train, y_train =  train_00.iloc[:,3:], train_00.iloc[:,2]
