@@ -59,3 +59,17 @@ Run a dAD method - required inputs include:
 python dAD.py
 ```
 
+## 2. SCKBA (baseline CP)
+
+### 2.1. Training
+Using the `nonconformist` library train XGBoost model on the training set and compute calibration scores.
+
+```
+python baseline_cp.py 
+```
+
+### 2.2. Normalisation coefficients
+To compare the dAD approach with baseline studies, we need to compute normalisation coefficients as used in earlier studies.
+
+`4_train_nc.py` computes normasation coefficients regarding the median distance and standard deviations from the training samples
+`2b_train_err_(base)` builds an additional error model, which prediction of error is used as normalisation of nonconformity scores
