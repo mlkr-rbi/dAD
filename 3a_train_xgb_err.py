@@ -1,12 +1,11 @@
 import xgboost as xgb
-from sklearn.model_selection import cross_val_predict, KFold
 import pickle
 import pandas as pd
 
 # UPLOAD DATA
-train_00 = pd.read_csv('./scenarios/train_00.csv')
+train_00 = pd.read_csv('./sckba/train_00.csv')
 
-cv_tr = pd.read_csv('./scenarios/cv_predictions.csv', index_col='Unnamed: 0')
+cv_tr = pd.read_csv('./output/cv_predictions.csv', index_col='Unnamed: 0')
 cv_tr_mean = (cv_tr.iloc[:,0] + cv_tr.iloc[:,1] + cv_tr.iloc[:,2] + cv_tr.iloc[:,3] + cv_tr.iloc[:,4] + cv_tr.iloc[:,5] + cv_tr.iloc[:,6] + cv_tr.iloc[:,7] + cv_tr.iloc[:,8] + cv_tr.iloc[:,9]) / 10
 
 # XGBOOST
@@ -25,4 +24,4 @@ xg_reg_ERR.fit(X_train, y_train)
 
 
 # SAVE MODEL!
-pickle.dump(xg_reg_ERR, open('./scenarios/xgb_reg_ERR.pkl', 'wb'))
+pickle.dump(xg_reg_ERR, open('./output/xgb_reg_ERR.pkl', 'wb'))
