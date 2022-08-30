@@ -34,15 +34,15 @@ Datasets include:
 Create similarity matrices of test compounds and targets towards the training samples.
 
 ```
-python data_processing.py  
+python 1_data_processing.py  
 ```
 
 ### 1.3. Training
 Train XGBoost model on the training set; train an additional model in 10x10-fold CV mode to compute nonconformity scores of all training samples.
 
 ```
-python train_xgb.py 
-python train_xgb_cv.py
+python 1_train_xgb.py 
+python 1_train_xgb_cv.py
 ```
 
 
@@ -56,7 +56,7 @@ Run a dAD method - required inputs include:
 - pretrained model
 
 ```
-python dAD.py
+python 1_dAD.py
 ```
 
 ## 2. SCKBA (baseline CP)
@@ -65,11 +65,21 @@ python dAD.py
 Using the `nonconformist` library train XGBoost model on the training set and compute calibration scores.
 
 ```
-python baseline_cp.py 
+python 2_CP_baseline.py 
 ```
 
 ### 2.2. Normalisation coefficients
 To compare the dAD approach with baseline studies, we need to compute normalisation coefficients as used in earlier studies.
 
-`4_train_nc.py` computes normasation coefficients regarding the median distance and standard deviations from the training samples
-`2b_train_err_(base)` builds an additional error model, which prediction of error is used as normalisation of nonconformity scores
+`2_train_nc.py` computes normasation coefficients regarding the median distance and standard deviations from the training samples
+`2_train_xgb_err.py` builds an additional error model, which prediction of error is used as normalisation of nonconformity scores
+
+
+## 3. BENCHMARK
+Same as for the SCKBA dataset, dAD approach (and baseline approaches) could be tested over several benchmark datasets available at:
+
+```
+gdown 1yS8p-g_z9Tf6ucw6ey-AQnD_Et8e43tz
+unzip benchmark.zip
+```
+
