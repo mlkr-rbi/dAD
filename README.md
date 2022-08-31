@@ -82,4 +82,4 @@ Same as for the SCKBA dataset, dAD approach (and baseline approaches) could be t
 gdown 1yS8p-g_z9Tf6ucw6ey-AQnD_Et8e43tz
 unzip benchmark.zip
 ```
-Data processing and the rest of the scripts is defined for all six datasets that we used as a benchmark for dAD testing. Depending on the dataset of interest, comment others in the predefined list at the begining of every script.
+`Data processing` and the rest of the scripts are defined for all six datasets that we used as a benchmark for `dAD` testing. Depending on the dataset of interest, comment others in the predefined list at the begining of every script to avoid unnecessary computation.
