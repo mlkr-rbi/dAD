@@ -12,7 +12,7 @@ from math import exp, log
 train_00 = pd.read_csv('./sckba/train_00.csv')
 i_space = pd.read_csv('./sckba/i_space.csv')
 train_nc = pd.read_csv('./sckba/train_nc.csv')
-model = pickle.load(open('./sckba/output/xg_reg_ERR_base.pkl','rb'))
+model = pickle.load(open('./output/xg_reg_ERR_base.pkl','rb'))
 
 # Subset data on proper traning and calibration set
 SEED=239
