@@ -1,18 +1,15 @@
 import pandas as pd
 import numpy as np
 import pickle
-from sklearn.ensemble import RandomForestRegressor
 from nonconformist.cp import IcpRegressor
 from nonconformist.nc import NcFactory
-from scoring_metrics import rmse, mse, ci
 import random 
 from sklearn.model_selection import train_test_split
 import xgboost as xgb
 from math import exp, log
 
 
-#datasets = ['BindingDB_KI', 'ChEMBL_KI', 'Davis_KI', 'KIBA_KI', 'DTC_GPCR', 'DTC_SSRI']
-datasets = ['Davis_KI', 'DTC_SSRI']
+datasets = ['BindingDB_KI', 'ChEMBL_KI', 'Davis_KI', 'KIBA_KI', 'DTC_GPCR', 'DTC_SSRI']
 
 for data in datasets:
     
