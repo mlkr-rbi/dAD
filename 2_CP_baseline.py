@@ -106,7 +106,7 @@ for x in range(len(sx)):
         
         
         gamma = 0
-        if scenarios[x] == 'test_S1_00':
+        if sx[x] == 'S1':
             gamma=0.2
         else:
             gamma=0
