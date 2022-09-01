@@ -77,6 +77,8 @@ for i in range(len(train_nc)):
     train_nc.loc[i,'sum_dist_t'] = tr_nonconf_.iloc[:,6].sum()
     
 
+train_nc.loc[:, 'sum_dist_ct'] = (train_nc.loc[:, 'sum_dist_c'] + train_nc.loc[:, 'sum_dist_t']) / 2
+
 # Write a file
 train_nc.to_csv('./sckba/train_nc.csv')
 
