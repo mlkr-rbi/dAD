@@ -2,8 +2,7 @@ import pandas as pd
 import numpy as np
 import pickle
 
-#datasets = ['BindingDB_KI', 'ChEMBL_KI', 'Davis_KI', 'KIBA_KI', 'DTC_GPCR', 'DTC_SSRI']
-datasets = ['Davis_KI', 'DTC_GPCR', 'DTC_SSRI']
+datasets = ['BindingDB_KI', 'ChEMBL_KI', 'Davis_KI', 'KIBA_KI', 'DTC_GPCR', 'DTC_SSRI']
 modes = ['NN', 'CV']
 
 for data in datasets:
