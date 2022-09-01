@@ -53,8 +53,8 @@ gamma = [0,0.2]
 
 # Define a for-loop
 for x in range(len(sx)):
-    ts_C = pd.read_csv('~/notebooks/PDB/DATA/CP_2022/data/' + sx[x] + "_C.csv")
-    ts_T = pd.read_csv('~/notebooks/PDB/DATA/CP_2022/data/' + sx[x] + "_T.csv")
+    ts_C = pd.read_csv('./sckba/' + sx[x] + "_C.csv")
+    ts_T = pd.read_csv('./sckba/' + sx[x] + "_T.csv")
 
     data_ts = pd.read_csv('./sckba/test_' + s + '.csv')
 
