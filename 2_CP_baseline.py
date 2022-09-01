@@ -56,7 +56,7 @@ for x in range(len(sx)):
     ts_C = pd.read_csv('./sckba/' + sx[x] + "_C.csv")
     ts_T = pd.read_csv('./sckba/' + sx[x] + "_T.csv")
 
-    data_ts = pd.read_csv('./sckba/test_' + s + '.csv')
+    data_ts = pd.read_csv('./sckba/test_' + sx[x] + '.csv')
 
     X_ts, y_ts = data_ts.iloc[:,3:], data_ts.iloc[:,2]
     X_ts.columns = X_ts.columns.str.replace('[','')
