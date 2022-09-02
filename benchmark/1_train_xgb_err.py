@@ -2,6 +2,8 @@ import xgboost as xgb
 from sklearn.model_selection import cross_val_predict, KFold
 import pickle
 import pandas as pd
+import numpy as np
+import random
 
 
 datasets = ['BindingDB_KI', 'ChEMBL_KI', 'Davis_KI', 'KIBA_KI', 'DTC_GPCR', 'DTC_SSRI']
@@ -23,7 +25,7 @@ for data in datasets:
         N = 1500
 
     # XGBOOST
-    X_train, y_train = train_00.iloc[:,3:], abs(cv_tr_mean - train_00.iloc[:,2])
+    X_train, y_train = data_tr.iloc[:,3:], abs(cv_tr_mean - data_tr.iloc[:,2])
 
     # CLEAN COLUMN NAMES
     # A) EDIT COLNAMES - TRAIN
