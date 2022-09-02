@@ -8,11 +8,11 @@ modes = ['NN', 'CV']
 for data in datasets:
 
     # Load data and model
-    data_ts =  pd.read_csv('./Benchmark/' + data + '/' + data + '_test.csv', index_col='Unnamed: 0')
-    ts_C =  pd.read_csv('./Benchmark/' + data + '/ts_C_space.csv', index_col='Unnamed: 0')
-    ts_T =  pd.read_csv('./Benchmark/' + data + '/ts_T_space.csv', index_col='Unnamed: 0')
-    i_space =  pd.read_csv('./Benchmark/' + data + '/i_space.csv', index_col='Unnamed: 0')
-    model =  pd.read_csv('./Benchmark/' + data + '/xgb_model.csv', index_col='Unnamed: 0')
+    data_ts =  pd.read_csv('./Benchmark/' + data + '/' + data + '_test.csv')
+    ts_C =  pd.read_csv('./Benchmark/' + data + '/ts_C_space.csv')
+    ts_T =  pd.read_csv('./Benchmark/' + data + '/ts_T_space.csv')
+    i_space =  pd.read_csv('./Benchmark/' + data + '/i_space.csv')
+    model = pickle.load(open('./Benchmark/' + data + '/xgb_model.pkl','rb'))
 
     # Prepare data for prediction
     X_ts, y_ts = data_ts.iloc[:,3:], data_ts.iloc[:,2]
@@ -89,8 +89,8 @@ for data in datasets:
 
 
             ts_conf_sizes_df = pd.DataFrame(ts_conf_sizes)
-            ts_conf_sizes_df.to_csv('./Benchmark/'+ data + '/nonconf_df/conf_sizes_NN.csv')
-            ts_nc.to_csv('./Benchmark/' + data + '/nonconf_df/nonconf_NN.csv')
+            ts_conf_sizes_df.to_csv('./Benchmark/'+ data + '/output/conf_sizes_NN.csv')
+            ts_nc.to_csv('./Benchmark/' + data + '/output/nonconf_NN.csv')
 
         else:
             # Assign CV predictions for training samples
@@ -158,5 +158,5 @@ for data in datasets:
 
 
             ts_conf_sizes_df = pd.DataFrame(ts_conf_sizes)
-            ts_conf_sizes_df.to_csv('./Benchmark/' + data + '/nonconf_df/conf_sizes_CV.csv')
-            ts_nc.to_csv('./Benchmark/' + data + '/nonconf_df/nonconf_CV.csv')
+            ts_conf_sizes_df.to_csv('./Benchmark/' + data + '/output/conf_sizes_CV.csv')
+            ts_nc.to_csv('./Benchmark/' + data + '/output/nonconf_CV.csv')
