@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import pickle
+from sklearn.ensemble import RandomForestRegressor
 from nonconformist.cp import IcpRegressor
 from nonconformist.nc import NcFactory
 import random 
@@ -14,13 +15,13 @@ datasets = ['BindingDB_KI', 'ChEMBL_KI', 'Davis_KI', 'KIBA_KI', 'DTC_GPCR', 'DTC
 for data in datasets:
     
     # Load common files
-    data_tr =  pd.read_csv('./Benchmark/' + data + '/' + data + '_train.csv', index_col='Unnamed: 0')
-    data_ts =  pd.read_csv('./Benchmark/' + data + '/' + data + '_test.csv', index_col='Unnamed: 0')
-    ts_C =  pd.read_csv('./Benchmark/' + data + '/ts_C_space.csv', index_col='Unnamed: 0')
-    ts_T =  pd.read_csv('./Benchmark/' + data + '/ts_T_space.csv', index_col='Unnamed: 0')
-    i_space = pd.read_csv('./Benchmark/' + data + '/i_space.csv', index_col='Unnamed: 0')
+    data_tr =  pd.read_csv('./Benchmark/' + data + '/' + data + '_train.csv')
+    data_ts =  pd.read_csv('./Benchmark/' + data + '/' + data + '_test.csv')
+    ts_C =  pd.read_csv('./Benchmark/' + data + '/ts_C_space.csv')
+    ts_T =  pd.read_csv('./Benchmark/' + data + '/ts_T_space.csv')
+    i_space = pd.read_csv('./Benchmark/' + data + '/i_space.csv',)
     train_nc = pd.read_csv('./Benchmark/' + data + '/train_nc.csv')
-    model = pickle.load(open('./Benchmark/' + data + '/xgb_ERR_model_(base).pkl','rb'))
+    model = pickle.load(open('./Benchmark/' + data + '/xgb_ERR_model_base.pkl','rb'))
 
     # Subset data on proper traning and calibration set
     SEED=239
@@ -71,7 +72,7 @@ for data in datasets:
     
     # Define sensitivity param
     gamma = 0; gamma_ = 0
-    if data == 'BindingDB_KI' | data == 'DTC_SSRI':
+    if data == 'BindingDB_KI' or data == 'DTC_SSRI':
         gamma=0; gamma_ = 0
     elif data == 'ChEMBL_KI':
         gamma=0.3; gamma_ = 0
@@ -93,26 +94,26 @@ for data in datasets:
     for i in range(len(ts_nc)):
         
         # Top ranking compounds in the traning space
-        c_x_sim = ts_C.loc[:, ts_C.columns == ts_nc.loc[i,'SMILES']].sort_values(by=ts_nc.loc[i,'SMILES'], ascending=False)[0:k]
-        c_x_ids = ts_C[ts_C.index.isin(ts_C.loc[:, ts_C.columns == ts_nc.loc[i,'SMILES']].sort_values(by=ts_nc.loc[i,'SMILES'], ascending=False)[0:k].index)]['SMILES']
-        c_x_ids = pd.merge(c_x_ids, c_x_sim, left_index=True, right_index=True)
+        c_k_sim = ts_C.loc[:, ts_C.columns == ts_nc.loc[i,'SMILES']].sort_values(by=ts_nc.loc[i,'SMILES'], ascending=False)[0:k]
+        c_k_ids = ts_C[ts_C.index.isin(ts_C.loc[:, ts_C.columns == ts_nc.loc[i,'SMILES']].sort_values(by=ts_nc.loc[i,'SMILES'], ascending=False)[0:k].index)]['SMILES']
+        c_k = pd.merge(c_k_ids, c_k_sim, left_index=True, right_index=True)
 
         # Top ranking kinases in the traning space
-        t_x_sim = ts_T.loc[:, ts_T.columns == ts_nc.loc[i,'TARGETS']].sort_values(by=ts_nc.loc[i,'TARGETS'], ascending=False)[0:q]
-        t_x_ids = ts_T[ts_T.index.isin(ts_T.loc[:, ts_T.columns == ts_nc.loc[i,'TARGETS']].sort_values(by=ts_nc.loc[i,'TARGETS'], ascending=False)[0:q].index)]['TARGETS']
-        t_x = pd.merge(t_x_ids, t_x_sim, left_index=True, right_index=True)
+        t_q_sim = ts_T.loc[:, ts_T.columns == ts_nc.loc[i,'TARGETS']].sort_values(by=ts_nc.loc[i,'TARGETS'], ascending=False)[0:q]
+        t_q_ids = ts_T[ts_T.index.isin(ts_T.loc[:, ts_T.columns == ts_nc.loc[i,'TARGETS']].sort_values(by=ts_nc.loc[i,'TARGETS'], ascending=False)[0:q].index)]['TARGETS']
+        t_q = pd.merge(t_q_ids, t_q_sim, left_index=True, right_index=True)
         
         # Find the interaction landscape of extracted conformity subspaces
-        conf_region = pd.merge(c_x_ids, i_space, left_on='SMILES', right_on='SMILES')
-        conf_region = conf_region.loc[:, conf_region.columns.isin(t_x_ids)]
-        conf_region.insert(0, "SMILES", c_x_ids.values)
+        conf_region = pd.merge(c_k_ids, i_space, left_on='SMILES', right_on='SMILES')
+        conf_region = conf_region.loc[:, conf_region.columns.isin(t_q_ids)]
+        conf_region.insert(0, "SMILES", c_k_ids.values)
         conf_region = pd.melt(conf_region, id_vars=['SMILES'])
         conf_region = conf_region.rename(columns={"variable": "TARGETS", "value": "affinity"})
         conf_region = conf_region.dropna()
 
         # Unite similarities and differences under one df
-        ts_nonconf_ = conf_region.merge(c_x_ids, on="SMILES")
-        ts_nonconf_ = ts_nonconf_.merge(t_x, on="TARGETS")
+        ts_nonconf_ = conf_region.merge(c_k, on="SMILES")
+        ts_nonconf_ = ts_nonconf_.merge(t_q, on="TARGETS")
         
         ts_sim_sum = (ts_nonconf_.iloc[:,3] + ts_nonconf_.iloc[:,4])/2
         lambda_d = sum(ts_sim_sum) / train_nc['sum_dist_ct'].median()
@@ -150,7 +151,5 @@ for data in datasets:
         ts_nc.loc[i, '95_CI_std'] = (abs(ts_prediction_95[i][0] - ts_prediction_95[i][1])/2)/ (gamma_ + ksi_s)
         ts_nc.loc[i, '99_CI_std'] = (abs(ts_prediction_99[i][0] - ts_prediction_99[i][1])/2)/ (gamma_ + ksi_s)
         
-        ts_nc.loc[i, 'gamma'] = gamma
 
-
-    ts_nc.to_csv('~/Benchmark/' + data +'/output/ts_nonconf_BASE_' + data + '.csv')
+    ts_nc.to_csv('./Benchmark/' + data +'/output/ts_nonconf_BASE_' + data + '.csv')
