@@ -1,6 +1,8 @@
 # Dynamic Applicability Domain (dAD)
 Dynamic applicability domain (dAD) is a extension of conformal predictor framework for approximation of prediction regions with confidence guarantees for dyadic data. We show the performance of the dAD algorithm for compound-target binding affinity space.
 
+PYTHON LIBRARY: https://github.com/HRZZ-AIGEN/dynamad
+
 ## Requirements
 ```
 pandas >= '1.1.5'
